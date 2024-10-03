@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./../../newTemplate.xhtml">
+
+            <ui:define name="content">
+                 <div class="container row-mt column-mt">
+                        <div>
+                            <a value="Registrar" class="btn btn-success" data-toggle="modal" data-target="#myModal">Registrar nuevo niño</a>
+                            <div class="modal" id="myModal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <!-- Cabecera del modal -->
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Registro de niños</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <!-- Contenido del modal -->
+                                        <div class="modal-body">
+                                            <f:view>
+                                                <h:form enctype="multipart/form-data">
+                                                    
+                                                    <h:panelGrid columns="2">
+                                                        
+                                                        <h:outputLabel value="Foto:" for="foto" />
+                                                        <h:inputFile value="#{kidController.archivo}"/>
+                                                        <h:outputLabel value="Niup:" for="niup" />
+                                                        <h:inputText id="niup" value="#{kidController.kid.niup}" title="Niup" />
+                                                        <h:outputLabel value="Nombre:" for="nombre" />
+                                                        <h:inputText id="nombre" value="#{kidController.kid.nombre}" title="Nombre" />
+                                                        <h:outputLabel value="Apellido:" for="apellido" />
+                                                        <h:inputText id="apellido" value="#{kidController.kid.apellido}" title="Apellido" />
+                                                        <h:outputLabel value="FechaNacimiento:" for="fechaNacimiento" />
+                                                        <h:inputText id="fechaNacimiento" value="#{kidController.kid.fechaNacimiento}" title="FechaNacimiento" >
+                                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                                        </h:inputText>
+                                                        <h:outputLabel value="Sangre:" for="sangre" />
+                                                        <h:inputText id="sangre" value="#{kidController.kid.sangre}" title="Sangre" />
+                                                        <h:outputLabel value="CiudadNacimiento:" for="ciudadNacimiento" />
+                                                        <h:inputText id="ciudadNacimiento" value="#{kidController.kid.ciudadNacimiento}" title="CiudadNacimiento" />
+                                                        <h:outputLabel value="Eps:" for="eps" />
+                                                        <h:inputText id="eps" value="#{kidController.kid.eps}" title="Eps" />
+                                                        <h:outputLabel value="Idjardin:" for="idjardin" />
+                                                        <h:selectOneMenu id="idjardin" value="#{kidController.jardin.idjardin}" title="Idjardin" >
+                                                            <!-- TODO: update below reference to list of available items-->
+                                                            <f:selectItems value="#{jardinController.listar()}" var="jardin" itemValue="#{jardin.idjardin}" itemLabel="#{jardin.nombre}" />
+                                                        </h:selectOneMenu>
+                                                        <h:outputLabel value="Idacudiente:" for="idacudiente" />
+                                                        <h:selectOneMenu id="idacudiente" value="#{kidController.acudiente.idacudiente}" title="Idacudiente" >
+                                              
+                                                            <f:selectItems value="#{kidController.listarAcudiente()}" var="acudiente" itemValue="#{acudiente.idacudiente}" itemLabel="#{acudiente.idusuario.nombre} #{acudiente.idusuario.apellidos}" />
+                                                        </h:selectOneMenu>
+                                                    </h:panelGrid>
+                                                    <h:commandButton value="Registrar" class="btn btn-success" action="#{kidController.register()}"></h:commandButton>
+                                                </h:form>
+                                            </f:view>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="container">
+                    <f:view>
+
+
+                        <h:form>
+                            
+                            <h1><h:outputText value="Niños"/></h1>
+                            <h:commandButton value="generar reporte" class="btn btn-warning" action="#{kidController.generarPDF(actionEvent)}"/>
+                            <h:dataTable class="table" value="#{kidController.listar()}" var="kid">
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Idkid"/>
+                                    </f:facet>
+                                    <h:outputText value="#{kid.idkid}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Niup"/>
+                                    </f:facet>
+                                    <h:outputText value="#{kid.niup}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Foto"/>
+                                    </f:facet>
+                                    <h:outputText value="#{kid.foto}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Nombre"/>
+                                    </f:facet>
+                                    <h:outputText value="#{kid.nombre}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Apellido"/>
+                                    </f:facet>
+                                    <h:outputText value="#{kid.apellido}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="FechaNacimiento"/>
+                                    </f:facet>
+                                    <h:outputText value="#{kid.fechaNacimiento}">
+                                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                                    </h:outputText>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Sangre"/>
+                                    </f:facet>
+                                    <h:outputText value="#{kid.sangre}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="CiudadNacimiento"/>
+                                    </f:facet>
+                                    <h:outputText value="#{kid.ciudadNacimiento}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Eps"/>
+                                    </f:facet>
+                                    <h:outputText value="#{kid.eps}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Idjardin"/>
+                                    </f:facet>
+                                    <h:outputText value="#{kid.idjardin.nombre}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Idacudiente"/>
+                                    </f:facet>
+                                    <h:outputText value="#{kid.idacudiente.idusuario.nombre}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="accion"/>
+                                    </f:facet>
+                                                        
+                                    <h:commandButton value="editar" class="btn btn-primary" action="#{kidController.preEdit(kid)}" ></h:commandButton>
+                                    <h:commandButton value="eliminar" class="btn btn-danger" action="#{kidController.delete(kid)}" onclick="return confirm('¿Está seguro de querer eliminar el registro?')"></h:commandButton>
+                                </h:column>
+                            </h:dataTable>
+                        </h:form>
+                    </f:view>
+
+                </div>
+            </ui:define>
+                
+        </ui:composition>
+
+    </body>
+</html>

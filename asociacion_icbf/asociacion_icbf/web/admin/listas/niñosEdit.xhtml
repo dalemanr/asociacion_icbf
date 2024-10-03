@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../newTemplate.xhtml">
+
+            <ui:define name="content">
+                <f:view>
+                    <h:form enctype="multipart/form-data">
+                        <h1><h:outputText value="Editar"/></h1>
+                        <h:panelGrid columns="2">
+
+                            <h:outputLabel value="Niup:" for="niup" />
+                            <h:inputText id="niup" value="#{kidController.kid.niup}" title="Niup" />
+                            <h:outputLabel value="Foto:" for="foto" />
+                            <h:inputFile value="#{kidController.archivo}" title="Foto" />
+                            <h:outputLabel value="Nombre:" for="nombre" />
+                            <h:inputText id="nombre" value="#{kidController.kid.nombre}" title="Nombre" />
+                            <h:outputLabel value="Apellido:" for="apellido" />
+                            <h:inputText id="apellido" value="#{kidController.kid.apellido}" title="Apellido" />
+                            <h:outputLabel value="FechaNacimiento:" for="fechaNacimiento" />
+                            <h:inputText id="fechaNacimiento" value="#{kidController.kid.fechaNacimiento}" title="FechaNacimiento" >
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:inputText>
+                            <h:outputLabel value="Sangre:" for="sangre" />
+                            <h:inputText id="sangre" value="#{kidController.kid.sangre}" title="Sangre" />
+                            <h:outputLabel value="CiudadNacimiento:" for="ciudadNacimiento" />
+                            <h:inputText id="ciudadNacimiento" value="#{kidController.kid.ciudadNacimiento}" title="CiudadNacimiento" />
+                            <h:outputLabel value="Eps:" for="eps" />
+                            <h:inputText id="eps" value="#{kidController.kid.eps}" title="Eps" />
+                            <h:outputLabel value="Idjardin:" for="idjardin" />
+                            <h:selectOneMenu id="idjardin" value="#{kidController.jardin.idjardin}" title="Idjardin" >
+                                <!-- TODO: update below reference to list of available items-->
+                                <f:selectItems value="#{jardinController.listar()}" var="jardin" itemValue="#{jardin.idjardin}" itemLabel="#{jardin.nombre}" />
+                            </h:selectOneMenu>
+                            <h:outputLabel value="Idacudiente:" for="idacudiente" />
+                            <h:selectOneMenu id="idacudiente" value="#{kidController.acudiente.idacudiente}" title="Idacudiente" >
+
+                                <f:selectItems value="#{kidController.listarAcudiente()}" var="acudiente" itemValue="#{acudiente.idacudiente}" itemLabel="#{acudiente.idusuario.nombre} #{acudiente.idusuario.apellidos}" />
+                            </h:selectOneMenu>
+                        </h:panelGrid>
+                        <h:commandButton value="Guardar" class="btn btn-success" action="#{kidController.edit()}"></h:commandButton>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

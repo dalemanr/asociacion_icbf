@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./../../newTemplate.xhtml">
+
+            <ui:define name="content">
+                <f:view>
+
+
+                    <h:form>
+                        <h1><h:outputText value="Editar"/></h1>
+                        <h:panelGrid columns="2">
+
+                            <h:outputLabel value="Idjardin:" for="idjardin" />
+                            <h:selectOneMenu id="idjardin" value="#{madreComunitariaController.jardin.idjardin}" title="Idjardin" >
+                                <!-- TODO: update below reference to list of available items-->
+                                <f:selectItems value="#{jardinController.listar()}" var="jardin" itemValue="#{jardin.idjardin}" itemLabel="#{jardin.nombre}"/>
+                            </h:selectOneMenu>
+                            <h:outputLabel value="Idusuario:" for="idusuario" />
+                            <h:selectOneMenu id="idusuario" value="#{madreComunitariaController.usuario.idusuario}" title="Idusuario" >
+                                <f:selectItems value="#{madreComunitariaController.listarMa()}" var="usuario" itemValue="#{usuario.idusuario}" itemLabel="#{usuario.nombre}"/>
+                            </h:selectOneMenu>
+                        </h:panelGrid>
+                        <h:commandButton value ="Registrar" class="btn btn-success" action="#{madreComunitariaController.edit()}" ></h:commandButton>
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

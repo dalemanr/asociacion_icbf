@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../newTemplate.xhtml">
+
+            <ui:define name="content">
+                 <div class="container row-mt column-mt">
+                        <div>
+                            <a value="Registrar" class="btn btn-success" data-toggle="modal" data-target="#myModal">Registrar nueva Madre</a>
+                            <div class="modal" id="myModal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <!-- Cabecera del modal -->
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Registro de madres comunitarias</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <!-- Contenido del modal -->
+                                        <div class="modal-body">
+                                            <f:view>
+
+
+                                                <h:form>
+                                                    
+                                                    <h:panelGrid columns="2">
+                                                       
+                                                        <h:outputLabel value="Idjardin:" for="idjardin" />
+                                                        <h:selectOneMenu id="idjardin" value="#{madreComunitariaController.jardin.idjardin}" title="Idjardin" >
+                                                            <!-- TODO: update below reference to list of available items-->
+                                                            <f:selectItems value="#{jardinController.listar()}" var="jardin" itemValue="#{jardin.idjardin}" itemLabel="#{jardin.nombre}"/>
+                                                        </h:selectOneMenu>
+                                                        <h:outputLabel value="Idusuario:" for="idusuario" />
+                                                        <h:selectOneMenu id="idusuario" value="#{madreComunitariaController.usuario.idusuario}" title="Idusuario" >
+                                                            <f:selectItems value="#{madreComunitariaController.listarMa()}" var="usuario" itemValue="#{usuario.idusuario}" itemLabel="#{usuario.nombre}"/>
+                                                        </h:selectOneMenu>
+                                                    </h:panelGrid>
+                                                    <h:commandButton value ="Registrar" class="btn-success" action="#{madreComunitariaController.register()}" ></h:commandButton>
+                                                </h:form>
+                                            </f:view>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="container">
+                    <f:view>
+
+
+                        <h:form>
+                            <h1><h:outputText value="Encargadas de los jardines"/></h1>
+                            <h:dataTable class="table" value="#{madreComunitariaController.listar()}" var="madreComunitaria">
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="id"/>
+                                    </f:facet>
+                                    <h:outputText value="#{madreComunitaria.idmadrecomunitaria}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="jardin"/>
+                                    </f:facet>
+                                    <h:outputText value="#{madreComunitaria.idjardin.nombre}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="madre"/>
+                                    </f:facet>
+                                    <h:outputText value="#{madreComunitaria.idusuario.nombre}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="accion"/>
+                                    </f:facet>
+                                                        
+                                    <h:commandButton value="editar" class="btn btn-primary" action="#{madreComunitariaController.preEdit2(madreComunitaria)}"></h:commandButton>
+                                    <h:commandButton value="eliminar" class="btn btn-danger" action="#{madreComunitariaController.delete(madreComunitaria)}" onclick="return confirm('¿Está seguro de querer eliminar el registro?')"></h:commandButton>
+                                </h:column>
+                            </h:dataTable>
+                        </h:form>
+                    </f:view>
+
+                    
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

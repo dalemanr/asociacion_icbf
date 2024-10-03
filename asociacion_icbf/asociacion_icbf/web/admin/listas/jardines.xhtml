@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+            <h:body>
+            <ui:composition template="./../../newTemplate.xhtml">
+                <ui:define name="content">
+                    <div class="container row-mt column-mt">
+                        <div>
+                            <a value="Registrar" class="btn btn-success" data-toggle="modal" data-target="#myModal">Registrar nuevo Jardin</a>
+                            <div class="modal" id="myModal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <!-- Cabecera del modal -->
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Registrar Jardín</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <!-- Contenido del modal -->
+                                        <div class="modal-body">
+                                            <f:view>
+                                                <h:form class="form">
+                                                    
+                                                    <h:panelGrid columns="2">
+                                                        <h:outputLabel value="Nombre:" for="nombre"/>
+                                                        <h:inputText id="nombre" value="#{jardinController.jardin.nombre}" title="Nombre"/>
+                                                        <h:outputLabel value="Estado:" for="estado"/>
+                                                        <h:selectOneMenu id="estado" value="#{jardinController.jardin.estado}" title="estado" styleClass="form-select">
+                                                                 <f:selectItem itemLabel="Seleccionar opción" itemValue="" />
+                                                                 <f:selectItem itemLabel="Aprobado" itemValue="Aprobado" />
+                                                                 <f:selectItem itemLabel="pendiente" itemValue="pendiente " />
+                                                                 <f:selectItem itemLabel="Denegado" itemValue="Denegado" />                                 
+                                                     </h:selectOneMenu>  
+                                                    </h:panelGrid>
+                                                    <h:commandButton value="Registrar" class="btn btn-success" action="#{jardinController.register()}"></h:commandButton>
+                                                </h:form>
+                                            </f:view>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <f:view>
+                            <h:form>
+                                <h1><h:outputText class="text-dark" value="Jardines"/></h1>
+                                <h:commandButton value="generar reporte Jardines Rechazados" class="btn btn-outline-warning" action="#{jardinController.generarPDF(actionEvent)}"/>
+                                <h:commandButton value="generar reporte Niños por Jardin" class="btn btn-outline-warning" action="#{jardinController.generarPDFNinosJardin(actionEvent)}"/>
+                                <h:commandButton value="generar reporte Inasistencias por Enfermedad" class="btn btn-outline-warning" action="#{asistenciaController.generarPDF(actionEvent)}"/>
+                                <h:commandButton value="generar reporte de asistencia semanal" class="btn btn-outline-warning" action="#{asistenciaController.generarPDFSemanal(actionEvent)}"/>
+                                <h:dataTable class="table" value="#{jardinController.listar()}" var="jardin">
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Idjardin"/>
+                                        </f:facet>
+                                        <h:outputText value="#{jardin.idjardin}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Nombre"/>
+                                        </f:facet>
+                                        <h:outputText value="#{jardin.nombre}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Estado"/>
+                                        </f:facet>
+                                        <h:outputText value="#{jardin.estado}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Acciones"/>
+                                        </f:facet>
+                                        
+                                        <h:commandButton value="editar" class="btn btn-primary" action="#{jardinController.preEdit2(jardin)}" ></h:commandButton>
+                                        <h:commandButton value="eliminar" class="btn btn-danger" action="#{jardinController.delete(jardin)}" onclick="return confirm('¿Está seguro de querer eliminar el registro?')"></h:commandButton>
+                                    </h:column>
+                                </h:dataTable>
+                            </h:form>
+                            
+                            
+                        </f:view>
+                    </div>
+                    <div>
+                        
+                    </div>
+                </ui:define>
+            </ui:composition>
+        </h:body>
+
+</html>
